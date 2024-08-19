@@ -40,6 +40,7 @@ image = Image.open(BytesIO(data))
 image.show()  # Dette vil vise billedet, hvis det er en gyldig billedfil
 
 
+
     
 # bytes_io = io.BytesIO()
 # bytes_io.write(data)

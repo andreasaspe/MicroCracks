@@ -39,7 +39,7 @@ with open('output_file.bin', 'wb') as file:
 image = Image.open(BytesIO(data))
 image.show()  # Dette vil vise billedet, hvis det er en gyldig billedfil
 
-Does it work
+
     
 # bytes_io = io.BytesIO()
 # bytes_io.write(data)

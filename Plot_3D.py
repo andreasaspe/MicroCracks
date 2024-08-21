@@ -17,8 +17,12 @@ import matplotlib.pyplot as plt
 # import numpy
 # imarray = numpy.array(im)
 
-tiff_file = '/Volumes/T9/USB/Injection_tracer_test_2D_overnight.ome.tiff'
-# tiff_file = '/Volumes/T9/USB/Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
+tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight.ome.tiff'
+# tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
+
+tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight.ome.tiff'
+# tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
+
 
 # Create a 3D plot
 fig = plt.figure()
@@ -56,8 +60,9 @@ with Image.open(tiff_file) as img:
             thesum[j] = np.sum(img_array_cropped[j,:])
 
         cmap='viridis'
-        print(np.min(thesum))
-        ax.plot(np.linspace(0,1,x_rows), np.ones(x_rows)*(i+1), thesum, cmap=cmap, vmin=7318251, vmax = 9793114)
+        print(i)
+        print(np.max(thesum))
+        ax.plot(np.linspace(0,1,x_rows), np.ones(x_rows)*(i+1), thesum) #, cmap=cmap, vmin=7318251, vmax = 9793114)
 
         i+=50
         

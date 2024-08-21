@@ -21,11 +21,11 @@ import subprocess
 # import numpy
 # imarray = numpy.array(im)
 
-tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight.ome.tiff'
+# tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight.ome.tiff'
 # tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
 
-tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight.ome.tiff'
-# tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
+# tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight.ome.tiff'
+tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
 
 #Change path to ffmpeg executable, since I cannot add it to environmental variable, due to admin rights.
 ffmpeg_path = r"c:\ffmpeg"
@@ -40,14 +40,14 @@ i = 0
 min_val = []
 max_val = []
 
-folder_path = r'G:\MicroCracks\Videos\Completely_cropped'
+folder_path = r'G:\MicroCracks\Videos\Completely_cropped_highpressure'
 #Create folder
 print("Creating folder")
 os.makedirs(folder_path,exist_ok=True)
 
 ffmpeg_command = [
     'ffmpeg',
-    '-framerate', '10',
+    '-framerate', '10', #10 er frames pr. second
     '-i', os.path.join(folder_path, '%d.png'),
     '-c:v', 'libx264',
     '-r', '30',

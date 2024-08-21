@@ -10,7 +10,8 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
-os.chdir("/Users/andreasaspe/Documents/DTU_igen/Videnskabelig Assistent/Data/Data")
+# os.chdir("/Users/andreasaspe/Documents/DTU_igen/Videnskabelig Assistent/Data/Data")
+os.chdir("G:/MicroCracks")
 
 #Low pressure
 col_names = ['Data Counter', 'Seconds', 'Data in mv/v','nan']

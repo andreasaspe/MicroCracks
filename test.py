@@ -1,46 +1,26 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Aug 19 14:09:03 2024
-
-@author: andreasaspe
-"""
-
-from PIL import Image
+import plotly.graph_objects as go
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 
-tiff_file = '/Volumes/T9/USB/Injection_tracer_test_2D_overnight.ome.tiff'
-# tiff_file = '/Volumes/T9/USB/Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
+# Assuming you have grid_x, grid_y, grid_z defined somewhere
+# For demonstration, we'll create some example data
+grid_x, grid_y = np.meshgrid(np.linspace(0, 1, 100), np.linspace(0, 1, 100))
+grid_z = np.sin(grid_x * 2 * np.pi) * np.cos(grid_y * 2 * np.pi)
 
-# Opret en figur og akse
-fig, ax = plt.subplots()
+# Create the 3D surface plot
+fig = go.Figure(data=[go.Surface(z=grid_z, x=grid_x, y=grid_y, colorscale='Viridis')])
 
-def update_frame(frame_num):
-    # Åbn TIFF-filen
-    with Image.open(tiff_file) as img:
-        img.seek(frame_num)
-        img_frame = img.copy()  # Kopi af den aktuelle frame
-
-        # Konverter til NumPy array
-        img_array = np.array(img_frame)
-        img_array_cropped = img_array[70:945+1,115:770-1+6]
-
-        ax.clear()  # Ryd akse
-        im = ax.imshow(img_array_cropped, cmap='viridis')
-        ax.set_title(f"Frame {frame_num}")
-
-    return [im]
-
-# Opret animation
-ani = animation.FuncAnimation(
-    fig, 
-    update_frame, 
-    frames=range(1000, 1500, 100),  # Frames fra 1000 til 1500 med interval 100
-    interval=50, 
-    blit=True, 
-    repeat_delay=1000
+# Update plot layout
+fig.update_layout(
+    title='Tracing the tracer',
+    scene=dict(
+        xaxis_title='Length of cell',
+        yaxis_title='# frames',
+        zaxis_title='Intensity',
+    )
 )
 
-plt.show()
+# Export the plot to an HTML file
+fig.write_html("plot.html")
+
+# Optionally, display the plot in an interactive environment
+fig.show()

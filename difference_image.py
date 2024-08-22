@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Aug 19 14:09:03 2024
-
-@author: andreasaspe
-"""
-
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
@@ -40,7 +32,7 @@ i = 0
 min_val = []
 max_val = []
 
-folder_path = r'G:\MicroCracks\Databehandling\Videos\Completely_cropped_highpressure'
+folder_path = r'G:\MicroCracks\Videos\Completely_cropped_highpressure'
 #Create folder
 print("Creating folder")
 os.makedirs(folder_path,exist_ok=True)
@@ -97,14 +89,36 @@ with Image.open(tiff_file) as img:
         i+= 50
         img_counter += 1 #DONT TOUCH
 
+def block_mean_diff(array1, array2, block_size):
+    # Sørg for at arrayerne har samme dimensioner
+    assert array1.shape == array2.shape, "Arrays must have the same shape"
+    
+    # Find dimensioner
+    rows, cols = array1.shape
+    
+    # Opret en matrix til at holde forskelle
+    diff_array = np.zeros((rows // block_size, cols // block_size))
+    
+    # Loop over blokke og beregn gennemsnit
+    for i in range(0, rows, block_size):
+        for j in range(0, cols, block_size):
+            block1 = array1[i:i+block_size, j:j+block_size]
+            block2 = array2[i:i+block_size, j:j+block_size]
+            # Beregn gennemsnitsforskellen af blokken
+            diff_array[i // block_size, j // block_size] = np.mean(block1 - block2)
+    
+    return diff_array
 
-#Creating video
-print("Creating video")
-subprocess.run(ffmpeg_command, check=True)
 
-#Remove folder again
-print("Removing folder")
-shutil.rmtree(folder_path)
+block_size = 6
+img_diff = block_mean_diff(img_array1, img_array2, block_size)
 
-# print(np.min(min_val))
-# print(np.max(max_val))
+print(img_diff)
+
+fig, ax = plt.subplots()
+cmap = 'viridis'
+cax = ax.imshow(img_diff, cmap=cmap, vmin=0, vmax = 70000)
+cbar = fig.colorbar(cax, ax=ax, orientation='vertical')
+cbar.set_label('Colorbar Label')  # Optional: Label for the colorbar
+plt.show()
+

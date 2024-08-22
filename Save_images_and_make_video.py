@@ -55,6 +55,7 @@ ffmpeg_command = [
     f'{folder_path}.mp4'
 ]
 
+#Det her er kommando-formtatet, hvis man kører det fra terminalen
 #ffmpeg -framerate 1 -i G:\MicroCracks\Videos\Every_50_image_cropped\%d.png -c:v libx264 -r 30 -pix_fmt yuv420p G:\MicroCracks\Videos\Every_50_image_cropped.mp4
 
 # Åbn TIFF-filen

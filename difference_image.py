@@ -46,7 +46,7 @@ with Image.open(tiff_file) as img:
 
 #Calculate average image
 avg_image /= N_avg_images
-ref_img = avg_image
+avg_image1 = avg_image
 
 
 

@@ -16,8 +16,8 @@ import os
 # import pyconrad.autoinit
 # from edu.stanford.rsl.conrad.data.numeric import NumericGrid
 
-file = r'g:\MicroCracks\Injection_tracer_test_2D.txrm'
-file = 'g:\MicroCracks\Scan_1_Dry\Scan_1_Dry_2024-07-09_120630\Dry_scan\Scan_1_Dry_Dry_scan.txrm'
+# file = r'g:\MicroCracks\Injection_tracer_test_2D.txrm'
+# file = 'g:\MicroCracks\Scan_1_Dry\Scan_1_Dry_2024-07-09_120630\Dry_scan\Scan_1_Dry_Dry_scan.txrm'
 # file = 'g:\MicroCracks\pRESSURE\Pressure_tests_Scan_2_5_recon.txm'
 
 # metadata = xrmreader.read_metadata(file)
@@ -36,13 +36,21 @@ file = 'g:\MicroCracks\Scan_1_Dry\Scan_1_Dry_2024-07-09_120630\Dry_scan\Scan_1_D
 
 # NumericGrid.from_numpy(raw_projections).show('Raw projections')
 
-data_path = r'g:\MicroCracks\pRESSURE'
-output_path = r'g:\MicroCracks\pRESSURE\NIFTI'
+
+data_path = r'/Volumes/T9/MicroCracks/pRESSURE'
+output_path = r'/Volumes/T9/MicroCracks/pRESSURE/NIFTI'
+# data_path = r'g:\MicroCracks\pRESSURE'
+# output_path = r'g:\MicroCracks\pRESSURE\NIFTI'
+
 
 for filename in os.listdir(data_path):
-    data = xrmreader.read_txrm(os.path.join(data_path,filename))
-    nifti_image = nib.Nifti1Image(data, affine=np.eye(4))
-    filename = file[:-4] + '.nii'
-    print("Saving NIFTI")
-    nib.save(nifti_image, os.path.join(output_path,filename))
-    print("NIFTI saved")
+    if os.path.isfile(os.path.join(data_path,filename)): #Drop NIFTI folder. Det SKAL være en fil.
+        if not os.path.isfile(os.path.join(output_path,filename[:-4] + '.nii')): #Check if it already is done
+            data = xrmreader.read_txrm(os.path.join(data_path,filename))
+            nifti_image = nib.Nifti1Image(data, affine=np.eye(4))
+            filename = filename[:-4] + '.nii'
+            print("Saving NIFTI")
+            nib.save(nifti_image, os.path.join(output_path,filename))
+            print("NIFTI saved")
+        else:
+            continue

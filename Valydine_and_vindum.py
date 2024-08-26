@@ -15,9 +15,11 @@ import numpy as np
 #################################### Validyne #########################################
 
 # os.chdir("/Users/andreasaspe/Documents/DTU_igen/Videnskabelig Assistent/Data/Data")
-os.chdir("G:/MicroCracks")
+os.chdir("/Volumes/T9/MicroCracks")
+# os.chdir("G:/MicroCracks")
 
 #Low pressure
+
 col_names = ['Data Counter', 'Seconds', 'Data in mv/v','nan']
 df = pd.read_csv('Validyne_SK2_secondtest_overnight.csv',skiprows=3,names=col_names)
 
@@ -87,8 +89,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-# os.chdir("/Users/andreasaspe/Documents/DTU_igen/Videnskabelig Assistent/Data/Data")
-os.chdir("G:/MicroCracks")
 
 #Low pressure
 # col_names = ['Data Counter', 'Seconds', 'Data in mv/v','nan']

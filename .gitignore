@@ -1,0 +1,5 @@
+#Ignorer alle .mp4-filer
+*.mp4
+
+#Ignorer alle .mov-filer
+*.mov

@@ -15,7 +15,7 @@ import pickle
 import mpld3
 import plotly.graph_objects as go
 
-
+#DENNE FIL SUMMERER FRA BUNDEN OG OP, PÅ TVÆRS AF EMNET (originale fil).
 
 # tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight.ome.tiff'
 # tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'

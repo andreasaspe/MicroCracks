@@ -46,14 +46,9 @@ with Image.open(tiff_file) as img:
         xmax_lim = 945
         ymin_lim = 190
         ymax_lim = 695
-        
-        # img_array[xmin_lim,:] = -10000
-        # img_array[xmax_lim,:] = -100000
-        # img_array[:,ymin_lim] = -100000
-        # img_array[:,ymax_lim] = -100000
-
 
         img_array_cropped = img_array[xmin_lim:xmax_lim,ymin_lim:ymax_lim]
+
         # Create figure and axes
         # fig, ax = plt.subplots()
         # ax.imshow(img_array)
@@ -128,6 +123,7 @@ fig.update_layout(
 
 # Export the plot to an HTML file
 fig.write_html("Injection_tracer_test_2D_overnight_ALONG_SURFACE.html")
+# fig.write_html("Injection_tracer_test_2D_overnight_high_pressure_ALONG_SURFACE.html")
 
 # # Optionally, display the plot in an interactive environment
 # fig.show()

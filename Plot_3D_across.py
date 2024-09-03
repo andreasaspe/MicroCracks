@@ -14,14 +14,15 @@ from matplotlib.ticker import FuncFormatter, ScalarFormatter
 import pickle
 import mpld3
 import plotly.graph_objects as go
+import matplotlib.patches as patches
 
 #DENNE FIL SUMMERER FRA BUNDEN OG OP, PÅ TVÆRS AF EMNET (originale fil).
 
 # tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight.ome.tiff'
 # tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
 
-tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight.ome.tiff'
-# tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
+# tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight.ome.tiff'
+tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
 
 
 x_list = []
@@ -40,8 +41,25 @@ with Image.open(tiff_file) as img:
 
         # Konverter til NumPy array
         img_array = np.array(img_frame)
+        xmin_lim = 70
+        xmax_lim = 945
+        ymin_lim = 190
+        ymax_lim = 695
 
-        img_array_cropped = img_array[70:945+1,115:770-1+6]
+        #Old boundaries
+        # xmin_lim = 70  
+        # xmax_lim = 945
+        # ymin_lim = 115
+        # ymax_lim = 775
+
+        img_array_cropped = img_array[xmin_lim:xmax_lim,ymin_lim:ymax_lim]
+
+        # Create figure and axes
+        # fig, ax = plt.subplots()
+        # ax.imshow(img_array)
+        # rect = patches.Rectangle((ymin_lim, xmax_lim), ymax_lim-ymin_lim, -(xmax_lim-xmin_lim), linewidth=1, edgecolor='r', facecolor='none') #(koordinaterne for nederste venstre hjørne), bredde, højde
+        # ax.add_patch(rect)
+        # plt.show()
 
         x_rows = img_array_cropped.shape[0] #Number of x rows
         thesum = np.zeros(x_rows)
@@ -109,7 +127,8 @@ fig.update_layout(
 )
 
 # Export the plot to an HTML file
-fig.write_html("Injection_tracer_test_2D_overnight_ACROSS_SURFACE.html")
+# fig.write_html("Injection_tracer_test_2D_overnight_ACROSS_SURFACE.html")
+fig.write_html("Injection_tracer_test_2D_overnight_high_pressure_ACROSS_SURFACE.html")
 
 # # Optionally, display the plot in an interactive environment
 # fig.show()

@@ -20,8 +20,8 @@ import plotly.graph_objects as go
 # tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight.ome.tiff'
 # tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
 
-# tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight.ome.tiff'
-tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
+tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight.ome.tiff'
+# tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
 
 
 x_list = []
@@ -77,7 +77,7 @@ z = grid_z.flatten()
 # Create a 3D plot
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-ax.plot_surface(grid_x, grid_y, grid_z, cmap='viridis', edgecolor='none')
+ax.plot_surface(grid_x, grid_y, -grid_z, cmap='viridis', edgecolor='none')
 # ax.scatter(x,y,z, c=z) #, cmap=cmap, vmin=7318251, vmax = 9793114) cmap=plt.cm.viridis
 ax.set_title('Tracing the tracer')
 ax.set_xlabel('Length of cell')
@@ -109,7 +109,7 @@ fig.update_layout(
 )
 
 # Export the plot to an HTML file
-fig.write_html("Injection_tracer_test_2D_overnight_high_pressure_SURFACE.html")
+fig.write_html("Injection_tracer_test_2D_overnight_ACROSS_SURFACE.html")
 
 # # Optionally, display the plot in an interactive environment
 # fig.show()

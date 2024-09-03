@@ -14,14 +14,16 @@ from matplotlib.ticker import FuncFormatter, ScalarFormatter
 import pickle
 import mpld3
 import plotly.graph_objects as go
+import matplotlib.patches as patches
+
 
 #DENNE FIL SUMMERER FRA VENSTRE MOD HØJRE, PÅ LANGS AF EMNET.
 
 # tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight.ome.tiff'
 # tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
 
-# tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight.ome.tiff'
-tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
+tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight.ome.tiff'
+# tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
 
 
 x_list = []
@@ -40,17 +42,33 @@ with Image.open(tiff_file) as img:
 
         # Konverter til NumPy array
         img_array = np.array(img_frame)
+        xmin_lim = 70
+        xmax_lim = 945
+        ymin_lim = 190
+        ymax_lim = 695
+        
+        # img_array[xmin_lim,:] = -10000
+        # img_array[xmax_lim,:] = -100000
+        # img_array[:,ymin_lim] = -100000
+        # img_array[:,ymax_lim] = -100000
 
-        img_array_cropped = img_array[70:945+1,115:770-1+6]
 
-        x_rows = img_array_cropped.shape[0] #Number of x rows
-        thesum = np.zeros(x_rows)
+        img_array_cropped = img_array[xmin_lim:xmax_lim,ymin_lim:ymax_lim]
+        # Create figure and axes
+        # fig, ax = plt.subplots()
+        # ax.imshow(img_array)
+        # rect = patches.Rectangle((ymin_lim, xmax_lim), ymax_lim-ymin_lim, -(xmax_lim-xmin_lim), linewidth=1, edgecolor='r', facecolor='none') #(koordinaterne for nederste venstre hjørne), bredde, højde
+        # ax.add_patch(rect)
+        # plt.show()
 
-        for j in range(x_rows):
-            thesum[j] = np.sum(img_array_cropped[j,:])
+        y_rows = img_array_cropped.shape[1] #Number of x rows
+        thesum = np.zeros(y_rows)
 
-        x = np.linspace(0,1,x_rows)
-        y = np.ones(x_rows)*(i+1)
+        for j in range(y_rows):
+            thesum[j] = np.sum(img_array_cropped[:,j])
+
+        x = np.linspace(0,1,y_rows)
+        y = np.ones(y_rows)*(i+1)
 
         x_list+=list(x)
         y_list+=list(y)
@@ -102,14 +120,14 @@ fig = go.Figure(data=[go.Surface(z=grid_z, x=grid_x, y=grid_y, colorscale='Virid
 fig.update_layout(
     title='Tracing the tracer',
     scene=dict(
-        xaxis_title='Length of cell',
+        xaxis_title='Width of cell',
         yaxis_title='# frames',
         zaxis_title='Intensity',
     )
 )
 
 # Export the plot to an HTML file
-fig.write_html("Injection_tracer_test_2D_overnight_high_pressure_SURFACE.html")
+fig.write_html("Injection_tracer_test_2D_overnight_ALONG_SURFACE.html")
 
 # # Optionally, display the plot in an interactive environment
 # fig.show()

@@ -55,11 +55,11 @@ with Image.open(tiff_file) as img:
         img_array_cropped = img_array[xmin_lim:xmax_lim,ymin_lim:ymax_lim]
 
         # Create figure and axes
-        # fig, ax = plt.subplots()
-        # ax.imshow(img_array)
+        fig, ax = plt.subplots()
+        ax.imshow(img_array)
         # rect = patches.Rectangle((ymin_lim, xmax_lim), ymax_lim-ymin_lim, -(xmax_lim-xmin_lim), linewidth=1, edgecolor='r', facecolor='none') #(koordinaterne for nederste venstre hjørne), bredde, højde
         # ax.add_patch(rect)
-        # plt.show()
+        plt.show()
 
         x_rows = img_array_cropped.shape[0] #Number of x rows
         thesum = np.zeros(x_rows)

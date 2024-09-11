@@ -12,7 +12,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # os.chdir("/Users/andreasaspe/Documents/DTU_igen/Videnskabelig Assistent/Data/Data")
-os.chdir("G:/MicroCracks")
+# os.chdir("G:/MicroCracks")
+os.chdir("/Volumes/T9/MicroCracks")
 
 #Low pressure
 # col_names = ['Data Counter', 'Seconds', 'Data in mv/v','nan']

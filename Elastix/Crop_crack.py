@@ -3,6 +3,7 @@ import numpy as np
 import os
 from os.path import join
 import matplotlib.pyplot as plt
+from my_functions import *
 
 root = r"D:\MicroCracks\pRESSURE\NIFTI"
 
@@ -21,6 +22,8 @@ z_start, z_end = 436, 467
 # 4. Crop billedet ved at bruge slicing af NumPy-arrayet
 cropped_array = image_array[z_start:z_end, y_start:y_end, x_start:x_end]
 
+cropped_array = normalize_array(cropped_array,range=[-1000,1000])
+
 # 5. Konverter tilbage til SimpleITK-billede
 cropped_image = sitk.GetImageFromArray(cropped_array)
 
@@ -33,4 +36,24 @@ cropped_image.SetDirection(image.GetDirection())
 output_file = input_file + '_cropped'
 sitk.WriteImage(cropped_image, os.path.join(root,output_file+'.nii'))
 
-print(f"Cropped image saved as {output_file}")
+print(f"Cropped image saved as {output_file}.nii")
+
+
+#Create mask
+cropped_shape = cropped_image.GetSize()
+
+#Create ones
+mask = np.ones(cropped_shape)
+
+#Save as nifti
+mask = sitk.GetImageFromArray(mask)
+
+#Supply with metadata
+mask.SetOrigin(cropped_image.GetOrigin())
+mask.SetSpacing(cropped_image.GetSpacing())
+mask.SetDirection(cropped_image.GetDirection())
+
+#Save image
+output_file_mask = input_file + '_cropped_mask'
+sitk.WriteImage(mask, os.path.join(root,output_file_mask+'.nii'))
+print(f"Mask saved as {output_file_mask}.nii")

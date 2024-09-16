@@ -1,0 +1,11 @@
+Peters template:
+elastix -f "/path/to/fixed_vol/fixed_vol.tiff" -m "/path/to/moving_vol/moving_vol.tiff" -fMask /path/to/fixed_vol/fixed_vol_mask.tiff -mMask "/path/to/moving_vol/moving_vol_mask.tiff" -out "/path/to/output/folder/" -p "/path/to/parameterFile.txt"
+
+Min kommando
+/dtu/3d-imaging-center/QIM/elastix/elastix-4.9.0/bin/elastix -f /work3/awias/Pressure_tests_Scan_2_5_recon_cropped.nii -m /work3/awias/Pressure_tests_Scan_2_65_recon_cropped.nii -f /work3/awias/Pressure_tests_Scan_2_5_recon_cropped_mask.nii -m /work3/awias/Pressure_tests_Scan_2_65_recon_cropped_mask.nii -out /work3/awias/Outputs -p /work3/awias/parameterFile.txt
+
+
+Du kan køre den i terminalen, men først efter du har kørt det her:
+export LD_LIBRARY_PATH=/dtu/3d-imaging-center/QIM/elastix/elastix-4.9.0/lib/:$LD_LIBRARY_PATH
+
+Jeg tror bare, at den kommando appender.

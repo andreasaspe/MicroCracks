@@ -6,3 +6,6 @@
 
 #Ignorer alle .mov-filer
 Meeting_Hamid/Results presentation.pptx
+
+#Ignorer mappen Data
+/Data/

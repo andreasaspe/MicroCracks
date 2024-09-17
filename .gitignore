@@ -9,3 +9,8 @@ Meeting_Hamid/Results presentation.pptx
 
 #Ignorer mappen Data
 /Data/
+
+#Ignorer alle .nii-filer og nii.gz og tiff
+*.nii
+*.nii.gz
+*.tiff

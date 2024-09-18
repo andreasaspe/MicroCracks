@@ -1,3 +1,6 @@
+#This script modifies the 3D image slightly to see if elastix is still able to make them equal...
+
+
 #Load tiff_file
 from PIL import Image
 import numpy as np
@@ -6,13 +9,11 @@ from my_functions import *
 
 tiff_file = r"C:\Users\awias\Documents\Research_Assistant\Data\Elastix\Outputs\result.0.tiff"
 
-#Load nifti-files
 fixed_volume = load_nifti(r"C:\Users\awias\Documents\Research_Assistant\Data\pRESSURE\NIFTI\Pressure_tests_Scan_2_5_recon_cropped.nii")
 moved_volume = load_nifti(r"C:\Users\awias\Documents\Research_Assistant\Data\pRESSURE\NIFTI\Pressure_tests_Scan_2_65_recon_cropped.nii")
 
 rotated_volume = np.zeros(fixed_volume.shape)
     
-#Load tiff_file
 with Image.open(tiff_file) as img:
     for i in range(img.n_frames):
         img.seek(i)  # Skift til den næste frame

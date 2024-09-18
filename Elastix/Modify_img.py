@@ -7,10 +7,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from my_functions import *
 
-tiff_file = r"C:\Users\awias\Documents\Research_Assistant\Data\Elastix\Outputs\result.0.tiff"
+tiff_file = r"C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Elastix\Outputs\result.0.tiff"
 
-fixed_volume = load_nifti(r"C:\Users\awias\Documents\Research_Assistant\Data\pRESSURE\NIFTI\Pressure_tests_Scan_2_5_recon_cropped.nii")
-moved_volume = load_nifti(r"C:\Users\awias\Documents\Research_Assistant\Data\pRESSURE\NIFTI\Pressure_tests_Scan_2_65_recon_cropped.nii")
+fixed_volume = load_nifti(r"C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\pRESSURE\NIFTI\Pressure_tests_Scan_2_5_recon_cropped.nii")
+moved_volume = load_nifti(r"C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\pRESSURE\NIFTI\Pressure_tests_Scan_2_65_recon_cropped.nii")
 
 rotated_volume = np.zeros(fixed_volume.shape)
     
@@ -49,6 +49,6 @@ diff_img = abs(fixed_volume-rotated_volume)
 plt.imshow(diff_img[10,:,:])
 plt.show()
 
-filename = r"C:\Users\awias\Documents\Research_Assistant\Data\Elastix\Outputs\diff_image.nii.gz"
+filename = r"C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Elastix\Outputs\diff_image.nii.gz"
 
 save_nifti(diff_img,filename)

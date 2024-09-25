@@ -12,7 +12,6 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 from matplotlib.ticker import FuncFormatter, ScalarFormatter
 import pickle
-import mpld3
 import plotly.graph_objects as go
 import matplotlib.patches as patches
 
@@ -21,8 +20,9 @@ import matplotlib.patches as patches
 # tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight.ome.tiff'
 # tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
 
-# tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight.ome.tiff'
-tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
+tiff_file = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Injection_tracer_test_2D_overnight.ome.tiff'
+# tiff_file = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
+
 
 
 x_list = []
@@ -59,7 +59,7 @@ with Image.open(tiff_file) as img:
         ax.imshow(img_array)
         # rect = patches.Rectangle((ymin_lim, xmax_lim), ymax_lim-ymin_lim, -(xmax_lim-xmin_lim), linewidth=1, edgecolor='r', facecolor='none') #(koordinaterne for nederste venstre hjørne), bredde, højde
         # ax.add_patch(rect)
-        plt.show()
+        # plt.show()
 
         x_rows = img_array_cropped.shape[0] #Number of x rows
         thesum = np.zeros(x_rows)

@@ -12,7 +12,6 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 from matplotlib.ticker import FuncFormatter, ScalarFormatter
 import pickle
-import mpld3
 import plotly.graph_objects as go
 import matplotlib.patches as patches
 
@@ -22,8 +21,8 @@ import matplotlib.patches as patches
 # tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight.ome.tiff'
 # tiff_file = '/Volumes/T9/MicroCracks/Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
 
-tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight.ome.tiff'
-# tiff_file = 'g:\MicroCracks\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
+tiff_file = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Injection_tracer_test_2D_overnight.ome.tiff'
+# tiff_file = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
 
 
 x_list = []

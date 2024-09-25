@@ -21,7 +21,7 @@ os.makedirs(folder_path,exist_ok=True)
 
 ffmpeg_command = [
     'ffmpeg',
-    '-framerate', '1', #dette tal er er frames pr. second
+    '-framerate', '15', #dette tal er er frames pr. second
     '-i', os.path.join(folder_path, '%d.png'),
     '-c:v', 'libx264',
     '-r', '30',
@@ -41,27 +41,53 @@ max_val = []
 
 cmap='viridis'
 
+avg_img = None #For reference image only
+
 #First reference image
 with Image.open(tiff_file) as img:
     
     end_number = img.n_frames #Define end of loop
+    N_avg_images = 20 #Number of average images for ref
     
     while i < end_number: #img.n_frames:
+        
+        if i == 0:
+            print("Doing ref image")
+            for j in range(N_avg_images):
+                #Get average image for the first 20 images.
+                img.seek(j)  # Skift til den næste frame
+                img_frame = img.copy()  # Kopi af den aktuelle frame
 
-        print(f"Processing {i}/{end_number}")
-        #Get average image for the first 20 images.
-        img.seek(i)  # Skift til den næste frame
-        img_frame = img.copy()  # Kopi af den aktuelle frame
+                # Konverter til NumPy array
+                img_array = np.array(img_frame,dtype=np.float64)
 
-        # Konverter til NumPy array
-        img_array = np.array(img_frame,dtype=np.float64)
+                #Image array cropped
+                img_array_cropped = img_array[70:945+1,220-1:685+2] #img_array[:,120:762] #Oprindelig cropping (completely cropped) img_array[70:945+1,220-1:685+2]
 
-        #Image array cropped
-        img_array_cropped = img_array[70:945+1,220-1:685+2] #img_array[:,120:762] #Oprindelig cropping (completely cropped) img_array[70:945+1,220-1:685+2]
+                #Save
+                if avg_img is None:
+                    avg_img = img_array_cropped
+                else:
+                    avg_img += img_array_cropped
+            
+            #Calc ref image
+            avg_img /= N_avg_images
+            ref_img = avg_img
+            
+            #Update counter
+            i=j
+        else:
+            print(f"Processing {i}/{end_number}")
+            #Get average image for the first 20 images.
+            img.seek(i)  # Skift til den næste frame
+            img_frame = img.copy()  # Kopi af den aktuelle frame
 
-        if i == 0: #Calc ref image
-            ref_img = img_array_cropped
-        else: #Calc diff image
+            # Konverter til NumPy array
+            img_array = np.array(img_frame,dtype=np.float64)
+
+            #Image array cropped
+            img_array_cropped = img_array[70:945+1,220-1:685+2] #img_array[:,120:762] #Oprindelig cropping (completely cropped) img_array[70:945+1,220-1:685+2]
+
             diff_img = abs(img_array_cropped - ref_img)
             fig = plt.figure()
             im = plt.imshow(diff_img,cmap=cmap,vmin = 0, vmax = 772) #vmin = 5513, vmax = 15000) #1991 3799 er max max value,  772 er mean max value, 0 er mean min value.
@@ -75,8 +101,8 @@ with Image.open(tiff_file) as img:
             
             min_val.append(np.min(diff_img))
             max_val.append(np.max(diff_img))
-        
-        i+=50
+            
+        i+=1
         
 
 #Creating video

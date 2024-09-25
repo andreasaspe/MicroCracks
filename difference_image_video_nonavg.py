@@ -47,7 +47,7 @@ avg_img = None #For reference image only
 with Image.open(tiff_file) as img:
     
     end_number = img.n_frames #Define end of loop
-    N_avg_images = 20 #Number of average images for ref
+    N_avg_images = 1 #Number of average images for ref
     
     while i < end_number: #img.n_frames:
         
@@ -102,7 +102,7 @@ with Image.open(tiff_file) as img:
             min_val.append(np.min(diff_img))
             max_val.append(np.max(diff_img))
             
-        i+=1
+        i+=50
         
 
 #Creating video

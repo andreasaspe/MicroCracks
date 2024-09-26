@@ -83,6 +83,7 @@ cropped_array = image_array[z_start:z_end, y_start:y_end, x_start:x_end]
 
 cropped_array = normalize_array(cropped_array,range=[-1000,1000])
 
+#Det her er cube
 cropped_array[4:10,80:90,30:42] = -1000
 
 # 5. Konverter tilbage til SimpleITK-billede

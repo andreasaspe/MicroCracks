@@ -4,27 +4,32 @@ import os
 from os.path import join
 import matplotlib.pyplot as plt
 from my_functions import *
+from skimage.util import img_as_ubyte, img_as_float
 
 #FIXED
 root = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\pRESSURE\NIFTI'
 save_folder = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Elastix'
 
 # 1. Indlæs NIfTI-filen
-input_file = "Pressure_tests_Scan_2_5_recon"
+input_file = "Pressure_tests_Scan_2_10_recon"
 image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
 
 # 2. Konverter SimpleITK-billedet til et NumPy-array
 image_array = sitk.GetArrayFromImage(image)
 
 # 3. Definér cropping-intervallet (x, y, z i Numpy svarer til (z, y, x))
-x_start, x_end = 879, 925
-y_start, y_end = 485, 608
-z_start, z_end = 436, 467
+x_start, x_end = 485, 517
+y_start, y_end = 579, 616
+z_start, z_end = 528, 550
 
 # 4. Crop billedet ved at bruge slicing af NumPy-arrayet
 cropped_array = image_array[z_start:z_end, y_start:y_end, x_start:x_end]
 
-cropped_array = normalize_array(cropped_array,range=[-1000,1000])
+# cropped_array = normalize_array(cropped_array,range=[0,255])
+
+# im_float = cropped_array/255.0
+
+# cropped_array = img_as_ubyte(im_float)
 
 # 5. Konverter tilbage til SimpleITK-billede
 cropped_image = sitk.GetImageFromArray(cropped_array)
@@ -67,24 +72,25 @@ root = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\pRESSURE\N
 save_folder = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Elastix'
 
 # 1. Indlæs NIfTI-filen
-input_file = "Pressure_tests_Scan_2_65_recon"
+input_file = "Pressure_tests_Scan_2_40_recon"
 image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
 
 # 2. Konverter SimpleITK-billedet til et NumPy-array
 image_array = sitk.GetArrayFromImage(image)
 
 # 3. Definér cropping-intervallet (x, y, z i Numpy svarer til (z, y, x))
-x_start, x_end = 879, 925
-y_start, y_end = 485, 608
-z_start, z_end = 436, 467
+x_start, x_end = 485, 517
+y_start, y_end = 579, 616
+z_start, z_end = 528, 550
 
 # 4. Crop billedet ved at bruge slicing af NumPy-arrayet
 cropped_array = image_array[z_start:z_end, y_start:y_end, x_start:x_end]
 
-cropped_array = normalize_array(cropped_array,range=[-1000,1000])
+# cropped_array = normalize_array(cropped_array,range=[0,255])
 
-#Det her er cube
-cropped_array[4:10,80:90,30:42] = -1000
+# im_float = cropped_array/255.0
+
+# cropped_array = img_as_ubyte(im_float)
 
 # 5. Konverter tilbage til SimpleITK-billede
 cropped_image = sitk.GetImageFromArray(cropped_array)

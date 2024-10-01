@@ -18,14 +18,6 @@ image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
 # 2. Konverter SimpleITK-billedet til et NumPy-array
 image_array = sitk.GetArrayFromImage(image)
 
-#Normalise
-image_array = normalize_array(image_array,range=[-1,1])
-
-# 7. Gem det beskårne billede som en ny NIfTI-fil
-output_file = 'fixed_cropped'
-save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
-
-print(f"Cropped image saved as {output_file}.nii")
 
  
 #Create mask
@@ -55,6 +47,19 @@ save_nifti(mask,os.path.join(save_folder,output_file_mask+'.nii'))
 print(f"Mask saved as {output_file_mask}.nii")
 
 
+#Save nifti (Saving it later, because otherwise mask will be zero)
+#Normalise
+image_array = normalize_array(image_array,range=[-1,1])
+
+# 7. Gem det beskårne billede som en ny NIfTI-fil
+output_file = 'fixed_cropped'
+save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
+
+print(f"Cropped image saved as {output_file}.nii")
+
+
+
+
 
 #MOVED
 root = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\pRESSURE\NIFTI'
@@ -67,13 +72,6 @@ image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
 # 2. Konverter SimpleITK-billedet til et NumPy-array
 image_array = sitk.GetArrayFromImage(image)
 
-#Normalise
-image_array = normalize_array(image_array,range=[-1,1])
-
-# 7. Gem det beskårne billede som en ny NIfTI-fil
-output_file = 'moved_cropped'
-save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
-print(f"Cropped image saved as {output_file}.nii")
 
  
 #Create mask
@@ -101,3 +99,13 @@ mask[:,:,880:] = 0 #x
 output_file_mask = 'moved_cropped_mask'
 save_nifti(mask,os.path.join(save_folder,output_file_mask+'.nii'))
 print(f"Mask saved as {output_file_mask}.nii")
+
+
+#Save nifti (Saving it later, because otherwise mask will be zero)
+#Normalise
+image_array = normalize_array(image_array,range=[-1,1])
+
+# 7. Gem det beskårne billede som en ny NIfTI-fil
+output_file = 'moved_cropped'
+save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
+print(f"Cropped image saved as {output_file}.nii")

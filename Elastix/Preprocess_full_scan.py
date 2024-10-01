@@ -16,12 +16,25 @@ file40 = 25648 #Value of same pixels in file Pressure_tests_Scan_2_40_recon
 
 pixel_diff = file10-file40 #This number needs to be added to file40.. I see if this works.
 
+file10_avg = 20227
+file40_avg = 19197
+
+pixel_diff_avg = file10_avg-file40_avg #This number needs to be added to file40.. I see if this works.
+
+
 # 1. Indlæs NIfTI-filen
 input_file = "Pressure_tests_Scan_2_10_recon"
 image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
 
 # 2. Konverter SimpleITK-billedet til et NumPy-array
 image_array = sitk.GetArrayFromImage(image)
+
+image_array[image_array > 40000] = 40000
+image_array[image_array < 25000] = 25000
+
+avg = np.mean(image_array)
+
+print(f"Average of 10 is {avg}")
 
 #Normalise
 # image_array = normalize_array(image_array,range=[-1,1])
@@ -39,7 +52,7 @@ image_shape = image_array.shape
 mask = np.zeros(image_shape)
 
 #Get cylinder
-mask[image_array > 25000] = 1
+mask[image_array > 26000] = 1
 
 #I x-retningen i Slicer skal alt over 880 og alt under 210 være 0.
 #I z-retningen er det 740 og 215
@@ -76,8 +89,16 @@ image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
 image_array = sitk.GetArrayFromImage(image)
 
 #Normalise
-image_array+=pixel_diff
+image_array+=pixel_diff_avg
 # image_array = normalize_array(image_array,range=[-1,1])
+
+image_array[image_array > 40000] = 40000
+image_array[image_array < 25000] = 25000
+
+avg = np.mean(image_array)
+
+print(f"Average of 40 is {avg}")
+
 
 # 7. Gem det beskårne billede som en ny NIfTI-fil
 output_file = 'moved_cropped'
@@ -91,7 +112,7 @@ image_shape = image_array.shape
 mask = np.zeros(image_shape)
 
 #Get cylinder
-mask[image_array > 25000] = 1
+mask[image_array > 26000] = 1
 
 #I x-retningen i Slicer skal alt over 880 og alt under 210 være 0.
 #I z-retningen er det 740 og 215

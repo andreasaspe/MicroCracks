@@ -1,1 +1,0 @@
-elastix -f "/zhome/bb/f/127616/Documents/MicroCracks/Data/Pressure_tests_Scan_2_5_recon.nii" -m "/zhome/bb/f/127616/Documents/MicroCracks/Data/Pressure_tests_Scan_2_65_recon.nii" -fMask /path/to/fixed_vol/fixed_vol_mask.tiff -mMask "/path/to/moving_vol/moving_vol_mask.tiff" -out "/path/to/output/folder/" -p "/path/to/parameterFile.txt"

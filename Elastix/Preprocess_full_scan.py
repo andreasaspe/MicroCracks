@@ -18,9 +18,12 @@ image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
 # 2. Konverter SimpleITK-billedet til et NumPy-array
 image_array = sitk.GetArrayFromImage(image)
 
+#Normalise
+image_array = normalize_array(image_array,range=[-1,1])
+
 # 7. Gem det beskårne billede som en ny NIfTI-fil
 output_file = 'fixed_cropped'
-sitk.WriteImage(image, os.path.join(save_folder,output_file+'.nii'))
+save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
 
 print(f"Cropped image saved as {output_file}.nii")
 
@@ -46,17 +49,9 @@ mask[:,740:,:] = 0 #y
 mask[:,:,:210] = 0 #x
 mask[:,:,880:] = 0 #x
 
-#Save as nifti
-mask = sitk.GetImageFromArray(mask)
-
-#Supply with metadata
-mask.SetOrigin(image.GetOrigin())
-mask.SetSpacing(image.GetSpacing())
-mask.SetDirection(image.GetDirection())
-
 #Save image
 output_file_mask = 'fixed_cropped_mask'
-sitk.WriteImage(mask, os.path.join(save_folder,output_file_mask+'.nii'))
+save_nifti(mask,os.path.join(save_folder,output_file_mask+'.nii'))
 print(f"Mask saved as {output_file_mask}.nii")
 
 
@@ -72,10 +67,12 @@ image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
 # 2. Konverter SimpleITK-billedet til et NumPy-array
 image_array = sitk.GetArrayFromImage(image)
 
+#Normalise
+image_array = normalize_array(image_array,range=[-1,1])
+
 # 7. Gem det beskårne billede som en ny NIfTI-fil
 output_file = 'moved_cropped'
-sitk.WriteImage(image, os.path.join(save_folder,output_file+'.nii'))
-
+save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
 print(f"Cropped image saved as {output_file}.nii")
 
  
@@ -100,15 +97,7 @@ mask[:,740:,:] = 0 #y
 mask[:,:,:210] = 0 #x
 mask[:,:,880:] = 0 #x
 
-#Save as nifti
-mask = sitk.GetImageFromArray(mask)
-
-#Supply with metadata
-mask.SetOrigin(image.GetOrigin())
-mask.SetSpacing(image.GetSpacing())
-mask.SetDirection(image.GetDirection())
-
 #Save image
 output_file_mask = 'moved_cropped_mask'
-sitk.WriteImage(mask, os.path.join(save_folder,output_file_mask+'.nii'))
+save_nifti(mask,os.path.join(save_folder,output_file_mask+'.nii'))
 print(f"Mask saved as {output_file_mask}.nii")

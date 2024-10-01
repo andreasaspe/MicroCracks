@@ -11,6 +11,11 @@ from scipy import ndimage
 root = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\pRESSURE\NIFTI'
 save_folder = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Elastix'
 
+file10 = 27056 #Value of same pixels in file Pressure_tests_Scan_2_10_recon
+file40 = 25648 #Value of same pixels in file Pressure_tests_Scan_2_40_recon
+
+pixel_diff = file10-file40 #This number needs to be added to file40.. I see if this works.
+
 # 1. Indlæs NIfTI-filen
 input_file = "Pressure_tests_Scan_2_10_recon"
 image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
@@ -18,6 +23,13 @@ image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
 # 2. Konverter SimpleITK-billedet til et NumPy-array
 image_array = sitk.GetArrayFromImage(image)
 
+#Normalise
+# image_array = normalize_array(image_array,range=[-1,1])
+
+# 7. Gem det beskårne billede som en ny NIfTI-fil
+output_file = 'fixed_cropped'
+save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
+print(f"Cropped image saved as {output_file}.nii")
 
  
 #Create mask
@@ -27,7 +39,7 @@ image_shape = image_array.shape
 mask = np.zeros(image_shape)
 
 #Get cylinder
-mask[image_array > 26000] = 1
+mask[image_array > 25000] = 1
 
 #I x-retningen i Slicer skal alt over 880 og alt under 210 være 0.
 #I z-retningen er det 740 og 215
@@ -47,15 +59,6 @@ save_nifti(mask,os.path.join(save_folder,output_file_mask+'.nii'))
 print(f"Mask saved as {output_file_mask}.nii")
 
 
-#Save nifti (Saving it later, because otherwise mask will be zero)
-#Normalise
-image_array = normalize_array(image_array,range=[-1,1])
-
-# 7. Gem det beskårne billede som en ny NIfTI-fil
-output_file = 'fixed_cropped'
-save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
-
-print(f"Cropped image saved as {output_file}.nii")
 
 
 
@@ -72,7 +75,14 @@ image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
 # 2. Konverter SimpleITK-billedet til et NumPy-array
 image_array = sitk.GetArrayFromImage(image)
 
+#Normalise
+image_array+=pixel_diff
+# image_array = normalize_array(image_array,range=[-1,1])
 
+# 7. Gem det beskårne billede som en ny NIfTI-fil
+output_file = 'moved_cropped'
+save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
+print(f"Cropped image saved as {output_file}.nii")
  
 #Create mask
 image_shape = image_array.shape
@@ -81,7 +91,7 @@ image_shape = image_array.shape
 mask = np.zeros(image_shape)
 
 #Get cylinder
-mask[image_array > 26000] = 1
+mask[image_array > 25000] = 1
 
 #I x-retningen i Slicer skal alt over 880 og alt under 210 være 0.
 #I z-retningen er det 740 og 215
@@ -99,13 +109,3 @@ mask[:,:,880:] = 0 #x
 output_file_mask = 'moved_cropped_mask'
 save_nifti(mask,os.path.join(save_folder,output_file_mask+'.nii'))
 print(f"Mask saved as {output_file_mask}.nii")
-
-
-#Save nifti (Saving it later, because otherwise mask will be zero)
-#Normalise
-image_array = normalize_array(image_array,range=[-1,1])
-
-# 7. Gem det beskårne billede som en ny NIfTI-fil
-output_file = 'moved_cropped'
-save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
-print(f"Cropped image saved as {output_file}.nii")

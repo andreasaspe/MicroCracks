@@ -18,9 +18,12 @@ image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
 # 2. Konverter SimpleITK-billedet til et NumPy-array
 image_array = sitk.GetArrayFromImage(image)
 
+#Normalise
+image_array = normalize_array(image_array,range=[-1,1])
+
 # 7. Gem det beskårne billede som en ny NIfTI-fil
 output_file = 'fixed_cropped'
-sitk.WriteImage(image, os.path.join(save_folder,output_file+'.nii'))
+sitk.WriteImage(image_array, os.path.join(save_folder,output_file+'.nii'))
 
 print(f"Cropped image saved as {output_file}.nii")
 
@@ -71,6 +74,9 @@ image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
 
 # 2. Konverter SimpleITK-billedet til et NumPy-array
 image_array = sitk.GetArrayFromImage(image)
+
+#Normalise
+image_array = normalize_array(image_array,range=[-1,1])
 
 # 7. Gem det beskårne billede som en ny NIfTI-fil
 output_file = 'moved_cropped'

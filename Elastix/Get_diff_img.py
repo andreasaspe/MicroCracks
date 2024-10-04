@@ -7,17 +7,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from my_functions import *
 
-tiff_file = r"C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Elastix\Outputs\result.0.tiff"
+tiff_file = r"C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\Elastix\result.0.nii"
 
-fixed_volume = load_nifti(r"C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\pRESSURE\NIFTI\Pressure_tests_Scan_2_5_recon_cropped.nii")
-moved_volume = load_nifti(r"C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\pRESSURE\NIFTI\Pressure_tests_Scan_2_65_recon_cropped.nii")
+fixed_volume = load_nifti(r"C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\Elastix\fixed_cropped.nii")
+moved_volume = load_nifti(r"C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\Elastix\moved_cropped.nii")
+rotated_volume = load_nifti(r"C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\Elastix\result.0.nii")
 
-rotated_volume = np.zeros(fixed_volume.shape)
-    
-with Image.open(tiff_file) as img:
-    for i in range(img.n_frames):
-        img.seek(i)  # Skift til den næste frame
-        rotated_volume[i,:,:] = img
 
 # fig, ax = plt.subplots(3, 3, squeeze=False, figsize=(12, 12))
 # ax[0, 0].imshow(fixed_volume[10], vmin=np.min(fixed_volume), vmax=np.max(fixed_volume), cmap='gray')
@@ -49,6 +44,6 @@ diff_img = abs(fixed_volume-rotated_volume)
 plt.imshow(diff_img[10,:,:])
 plt.show()
 
-filename = r"C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Elastix\Outputs\diff_image.nii.gz"
+filename = r"C:\Users\awias\Downloads\diff_image.nii.gz"
 
 save_nifti(diff_img,filename)

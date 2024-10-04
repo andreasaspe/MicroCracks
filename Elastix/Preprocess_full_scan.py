@@ -36,14 +36,6 @@ avg = np.mean(image_array)
 
 print(f"Average of 10 is {avg}")
 
-#Normalise
-# image_array = normalize_array(image_array,range=[-1,1])
-
-# 7. Gem det beskårne billede som en ny NIfTI-fil
-output_file = 'fixed_cropped'
-save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
-print(f"Cropped image saved as {output_file}.nii")
-
  
 #Create mask
 image_shape = image_array.shape
@@ -73,6 +65,14 @@ print(f"Mask saved as {output_file_mask}.nii")
 
 
 
+#Normalise
+image_array = normalize_array(image_array,range=[-1000,1000])
+
+# 7. Gem det beskårne billede som en ny NIfTI-fil
+output_file = 'fixed_cropped'
+save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
+print(f"Cropped image saved as {output_file}.nii")
+
 
 
 
@@ -100,10 +100,7 @@ avg = np.mean(image_array)
 print(f"Average of 40 is {avg}")
 
 
-# 7. Gem det beskårne billede som en ny NIfTI-fil
-output_file = 'moved_cropped'
-save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
-print(f"Cropped image saved as {output_file}.nii")
+
  
 #Create mask
 image_shape = image_array.shape
@@ -130,3 +127,12 @@ mask[:,:,880:] = 0 #x
 output_file_mask = 'moved_cropped_mask'
 save_nifti(mask,os.path.join(save_folder,output_file_mask+'.nii'))
 print(f"Mask saved as {output_file_mask}.nii")
+
+
+#Normalise
+image_array = normalize_array(image_array,range=[-1000,1000])
+
+# 7. Gem det beskårne billede som en ny NIfTI-fil
+output_file = 'moved_cropped'
+save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
+print(f"Cropped image saved as {output_file}.nii")

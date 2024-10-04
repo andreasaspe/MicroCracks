@@ -15,35 +15,35 @@ rotated_volume = load_nifti(r"C:\Users\awias\OneDrive - Danmarks Tekniske Univer
 
 
 # fig, ax = plt.subplots(3, 3, squeeze=False, figsize=(12, 12))
-# ax[0, 0].imshow(fixed_volume[10], vmin=np.min(fixed_volume), vmax=np.max(fixed_volume), cmap='gray')
-# ax[0, 1].imshow(fixed_volume[:, 10], vmin=np.min(fixed_volume), vmax=np.max(fixed_volume), cmap='gray')
-# ax[0, 2].imshow(fixed_volume[:, :, 10], vmin=np.min(fixed_volume), vmax=np.max(fixed_volume), cmap='gray')
-# ax[1, 0].imshow(moved_volume[10], vmin=np.min(moved_volume), vmax=np.max(moved_volume), cmap='gray')
-# ax[1, 1].imshow(moved_volume[:, 10], vmin=np.min(moved_volume), vmax=np.max(moved_volume), cmap='gray')
-# ax[1, 2].imshow(moved_volume[:, :, 10], vmin=np.min(moved_volume), vmax=np.max(moved_volume), cmap='gray')
-# ax[2, 0].imshow(rotated_volume[10], vmin=np.min(rotated_volume), vmax=np.max(rotated_volume), cmap='gray')
-# ax[2, 1].imshow(rotated_volume[:, 10], vmin=np.min(rotated_volume), vmax=np.max(rotated_volume), cmap='gray')
-# ax[2, 2].imshow(rotated_volume[:, :, 10], vmin=np.min(rotated_volume), vmax=np.max(rotated_volume), cmap='gray')
+# ax[0, 0].imshow(fixed_volume[200], vmin=np.min(fixed_volume), vmax=np.max(fixed_volume), cmap='gray')
+# ax[0, 1].imshow(fixed_volume[:, 200], vmin=np.min(fixed_volume), vmax=np.max(fixed_volume), cmap='gray')
+# ax[0, 2].imshow(fixed_volume[:, :, 200], vmin=np.min(fixed_volume), vmax=np.max(fixed_volume), cmap='gray')
+# ax[1, 0].imshow(moved_volume[200], vmin=np.min(moved_volume), vmax=np.max(moved_volume), cmap='gray')
+# ax[1, 1].imshow(moved_volume[:, 200], vmin=np.min(moved_volume), vmax=np.max(moved_volume), cmap='gray')
+# ax[1, 2].imshow(moved_volume[:, :, 200], vmin=np.min(moved_volume), vmax=np.max(moved_volume), cmap='gray')
+# ax[2, 0].imshow(rotated_volume[200], vmin=np.min(rotated_volume), vmax=np.max(rotated_volume), cmap='gray')
+# ax[2, 1].imshow(rotated_volume[:, 200], vmin=np.min(rotated_volume), vmax=np.max(rotated_volume), cmap='gray')
+# ax[2, 2].imshow(rotated_volume[:, :, 200], vmin=np.min(rotated_volume), vmax=np.max(rotated_volume), cmap='gray')
 # fig.tight_layout()
 # plt.show()
 
-print("Fixed\n")
-print(np.min(fixed_volume))
-print(np.max(fixed_volume))
-print("Moved\n")
-print(np.min(moved_volume))
-print(np.max(moved_volume))
-print("Rotated\n")
-print(np.min(rotated_volume))
-print(np.max(rotated_volume))
+# print("Fixed\n")
+# print(np.min(fixed_volume))
+# print(np.max(fixed_volume))
+# print("Moved\n")
+# print(np.min(moved_volume))
+# print(np.max(moved_volume))
+# print("Rotated\n")
+# print(np.min(rotated_volume))
+# print(np.max(rotated_volume))
 
 
-#Diff image
-diff_img = abs(fixed_volume-rotated_volume)
+# Diff image
+# diff_img = abs(fixed_volume-rotated_volume)
 
-plt.imshow(diff_img[10,:,:])
-plt.show()
+# plt.imshow(diff_img[10,:,:])
+# plt.show()
 
-filename = r"C:\Users\awias\Downloads\diff_image.nii.gz"
+filename = r"C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Desktop\rotated_volume.nii.gz"
 
-save_nifti(diff_img,filename)
+save_nifti(rotated_volume,filename)

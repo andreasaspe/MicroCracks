@@ -39,11 +39,11 @@ rotated_volume = load_nifti(r"C:\Users\awias\OneDrive - Danmarks Tekniske Univer
 
 
 # Diff image
-# diff_img = abs(fixed_volume-rotated_volume)
+diff_img = fixed_volume-moved_volume #fixed_volume-moved_volume when allowed. But could also be abs(fixed_volume-rotated_volume) with elastix
 
 # plt.imshow(diff_img[10,:,:])
 # plt.show()
 
-filename = r"C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Desktop\rotated_volume.nii.gz"
+filename = r"C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Desktop\diff_img.nii.gz"
 
-save_nifti(rotated_volume,filename)
+save_nifti(diff_img,filename)

@@ -38,9 +38,11 @@ img2_median = np.median(image_array2)
 
 #Adjust for median values
 if img1_median > img2_median:
-    image_array2+=img1_median
+    diff = img1_median - img2_median
+    image_array2+=diff
 else:
-    image_array1+=img2_median
+    diff = img2_median - img1_median
+    image_array1+=diff
 
 
 #Clamping

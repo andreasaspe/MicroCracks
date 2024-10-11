@@ -11,75 +11,59 @@ from scipy import ndimage
 root = r'C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\pRESSURE\NIFTI'
 save_folder = r'C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\Elastix'
 
-file10 = 27056 #Value of same pixels in file Pressure_tests_Scan_2_10_recon
-file40 = 25648 #Value of same pixels in file Pressure_tests_Scan_2_40_recon
-
-pixel_diff = file10-file40 #This number needs to be added to file40.. I see if this works.
-
-file10_avg = 20227
-file40_avg = 19197
-
-pixel_diff_avg = file10_avg-file40_avg #This number needs to be added to file40.. I see if this works.
-
-
 # 1. Indlæs NIfTI-filen
-input_file = "Pressure_tests_Scan_2_10_recon"
+input_file = "Pressure_tests_Scan_2_5_recon"
 image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
 
 # 2. Konverter SimpleITK-billedet til et NumPy-array
-image_array = sitk.GetArrayFromImage(image)
+image_array1 = sitk.GetArrayFromImage(image)
 
-# for i in range(10):
-#     plt.figure()
-#     plt.imshow(image_array[i*10,:,:])
-#     plt.show()
-
-image_array[image_array > 40000] = 40000
-image_array[image_array < 25000] = 25000
-
-avg = np.mean(image_array)
-
-print(f"Average of 10 is {avg}")
-
-#Normalise
-image_array = normalize_array(image_array,range=[-1000,1000])
-
-new_image_array = np.zeros(image_array.shape)
-new_image_array[2:,:-2:,:] = image_array[:-2,2:,:]
-
-# 7. Gem det beskårne billede som en ny NIfTI-fil
-output_file = 'fixed_cropped'
-save_nifti(new_image_array,os.path.join(save_folder,output_file+'.nii'))
-print(f"Cropped image saved as {output_file}.nii")
-
+#Get median value
+img1_median = np.median(image_array1)
 
 
 
 
 #MOVED
-1. Indlæs NIfTI-filen
-input_file = "Pressure_tests_Scan_2_40_recon"
+#1. Indlæs NIfTI-filen
+input_file = "Pressure_tests_Scan_2_65_recon"
 image = sitk.ReadImage(os.path.join(root,input_file+'.nii')) #join
 
 # 2. Konverter SimpleITK-billedet til et NumPy-array
-image_array = sitk.GetArrayFromImage(image)
+image_array2 = sitk.GetArrayFromImage(image)
 
-#Normalise
-image_array+=pixel_diff_avg
-# image_array = normalize_array(image_array,range=[-1,1])
+# Get median value
+img2_median = np.median(image_array2)
 
-image_array[image_array > 40000] = 40000
-image_array[image_array < 25000] = 25000
 
-avg = np.mean(image_array)
+#Adjust for median values
+if img1_median > img2_median:
+    image_array2+=img1_median
+else:
+    image_array1+=img2_median
 
-print(f"Average of 40 is {avg}")
 
-#Normalise
-image_array = normalize_array(image_array,range=[-1000,1000])
+#Clamping
+image_array1[image_array1 > 40000] = 40000
+image_array1[image_array1 < 25000] = 25000
+
+image_array2[image_array2 > 40000] = 40000
+image_array2[image_array2 < 25000] = 25000
+
+#Normalising
+image_array1 = normalize_array(image_array1,range=[-1000,1000])
+image_array2 = normalize_array(image_array2,range=[-1000,1000])
+
+#Move image 1. Dont know if its the correct boundaries?
+new_image_array = np.zeros(image_array1.shape)
+new_image_array[2:,:-2:,:] = image_array1[:-2,2:,:]
 
 # 7. Gem det beskårne billede som en ny NIfTI-fil
-output_file = 'moved_cropped'
-save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
+# 1 (new_image_array, fordi jeg skubbede billedet nogle pixels rundt manuelt i stedet for elastix)
+output_file = 'fixed_cropped'
+save_nifti(new_image_array,os.path.join(save_folder,output_file+'.nii'))
 print(f"Cropped image saved as {output_file}.nii")
- 
+# 2
+output_file = 'moved_cropped'
+save_nifti(image_array2,os.path.join(save_folder,output_file+'.nii'))
+print(f"Cropped image saved as {output_file}.nii")

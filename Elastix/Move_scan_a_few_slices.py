@@ -82,3 +82,4 @@ image_array = normalize_array(image_array,range=[-1000,1000])
 output_file = 'moved_cropped'
 save_nifti(image_array,os.path.join(save_folder,output_file+'.nii'))
 print(f"Cropped image saved as {output_file}.nii")
+ 

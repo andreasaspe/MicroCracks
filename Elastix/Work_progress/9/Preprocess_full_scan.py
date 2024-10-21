@@ -8,8 +8,8 @@ from skimage.util import img_as_ubyte, img_as_float
 from scipy import ndimage
 
 #FIXED
-root = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\pRESSURE\NIFTI'
-save_folder = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Elastix'
+root = r'C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\pRESSURE\NIFTI'
+save_folder = r'C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\Elastix'
 
 file10 = 27056 #Value of same pixels in file Pressure_tests_Scan_2_10_recon
 file40 = 25648 #Value of same pixels in file Pressure_tests_Scan_2_40_recon
@@ -78,8 +78,8 @@ print(f"Cropped image saved as {output_file}.nii")
 
 
 #MOVED
-root = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\pRESSURE\NIFTI'
-save_folder = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Elastix'
+root = r'C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\pRESSURE\NIFTI'
+save_folder = r'C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\Elastix'
 
 # 1. Indlæs NIfTI-filen
 input_file = "Pressure_tests_Scan_2_40_recon"

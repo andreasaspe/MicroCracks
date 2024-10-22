@@ -54,7 +54,7 @@
 
 // **************** Image sampling **********************
 
-(NumberOfSpatialSamples 500000)
+(NumberOfSpatialSamples 100000)
 
 (NewSamplesEveryIteration "true")
 (ImageSampler "Random")

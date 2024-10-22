@@ -14,9 +14,12 @@ import numpy as np
 
 #################################### Validyne #########################################
 
+
 # os.chdir("/Users/andreasaspe/Documents/DTU_igen/Videnskabelig Assistent/Data/Data")
-os.chdir("/Volumes/T9/MicroCracks")
+# os.chdir("/Volumes/T9/MicroCracks")
 # os.chdir("G:/MicroCracks")
+os.chdir(r"C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data")
+
 
 #Low pressure
 
@@ -106,6 +109,7 @@ columns = ['Date', 'Time', 'P1 Press A', 'P1 Press B', 'P1 Press', 'P1 Rate A', 
            'P4 Press B', 'P4 Press', 'P4 Rate A', 'P4 Rate B', 'P4 Rate', 'P4 Vol A', 'P4 Vol B',
            'P4 Cum Vol', 'P4 Delta Press']
 
+
 #Er næsten sikker på det er sådan her
 #Pumpe 1 er confining
 #Pumpe 2 er tracer injection
@@ -145,10 +149,10 @@ axs[1,1].set_title('PRESSURE (Water injection)')
 axs[1,1].set_xlabel('Seconds')
 axs[1,1].set_ylabel('Flow rate (mL/m)')
 
-# axs[2,1].plot( df.index , pd.to_numeric(df['P4 Press']) )
-# axs[2,1].set_title('PRESSURE (Backpressure)')
-# axs[2,1].set_xlabel('Seconds')
-# axs[2,1].set_ylabel('Flow rate (mL/m)')
+axs[2,1].plot( df.index , pd.to_numeric(df['P4 Press']) )
+axs[2,1].set_title('PRESSURE (Backpressure)')
+axs[2,1].set_xlabel('Seconds')
+axs[2,1].set_ylabel('Flow rate (mL/m)')
 
 plt.subplots_adjust(wspace=0.4, hspace=0.4)  # Adjust wspace for horizontal space
 fig.suptitle('High pressure',fontsize=20)

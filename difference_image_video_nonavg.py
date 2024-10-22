@@ -6,15 +6,15 @@ import shutil
 import subprocess
 
 #Tiff files
-tiff_file = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Injection_tracer_test_2D_overnight.ome.tiff'
-# tiff_file = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
+# tiff_file = r'C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\Injection_tracer_test_2D_overnight.ome.tiff'
+tiff_file = r'C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
 
 #Change path to ffmpeg executable, since I cannot add it to environmental variable, due to admin rights.
 ffmpeg_path = r"c:\ffmpeg"
 os.chdir(ffmpeg_path)
 
 #Define folder to images. Video name will also be named the same as the last folder
-folder_path = r'C:\Users\awias\Documents\Research_Assistant\MicroCracks\Data\Databehandling\Videos\non-average'
+folder_path = r'C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\Databehandling\Videos\non-average'
 #Create folder
 print("Creating folder")
 os.makedirs(folder_path,exist_ok=True)
@@ -76,6 +76,8 @@ with Image.open(tiff_file) as img:
             
             #Update counter
             i=j
+            
+            # ref_img = np.load('low_pressure_ref_img.npy')
         else:
             print(f"Processing {i}/{end_number}")
             #Get average image for the first 20 images.
@@ -88,7 +90,7 @@ with Image.open(tiff_file) as img:
             #Image array cropped
             img_array_cropped = img_array[70:945+1,220-1:685+2] #img_array[:,120:762] #Oprindelig cropping (completely cropped) img_array[70:945+1,220-1:685+2]
 
-            diff_img = abs(img_array_cropped - ref_img)
+            diff_img = img_array_cropped - ref_img
             fig = plt.figure()
             im = plt.imshow(diff_img,cmap=cmap,vmin = 0, vmax = 772) #vmin = 5513, vmax = 15000) #1991 3799 er max max value,  772 er mean max value, 0 er mean min value.
             fig.colorbar(im, orientation='vertical')
@@ -102,7 +104,7 @@ with Image.open(tiff_file) as img:
             min_val.append(np.min(diff_img))
             max_val.append(np.max(diff_img))
             
-        i+=50
+        i+=100
         
 
 #Creating video
@@ -110,8 +112,8 @@ print("Creating video")
 subprocess.run(ffmpeg_command, check=True)
 
 #Remove folder again
-print("Removing folder")
-shutil.rmtree(folder_path)      
+# print("Removing folder")
+# shutil.rmtree(folder_path)      
 
 print(np.mean(min_val))
 print(np.mean(max_val))

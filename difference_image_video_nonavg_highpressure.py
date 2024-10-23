@@ -6,8 +6,8 @@ import shutil
 import subprocess
 
 #Tiff files
-tiff_file = r'C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\Injection_tracer_test_2D_overnight.ome.tiff'
-# tiff_file = r'C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
+# tiff_file = r'C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\Injection_tracer_test_2D_overnight.ome.tiff'
+tiff_file = r'C:\Users\awias\OneDrive - Danmarks Tekniske Universitet\Documents\Research_Assistant\MicroCracks\Data\Injection_tracer_test_2D_overnight_high_pressure.ome.tiff'
 
 #Change path to ffmpeg executable, since I cannot add it to environmental variable, due to admin rights.
 ffmpeg_path = r"c:\ffmpeg"
@@ -43,6 +43,8 @@ cmap='viridis'
 
 avg_img = None #For reference image only
 
+do_ref = True
+
 #First reference image
 with Image.open(tiff_file) as img:
     
@@ -51,11 +53,11 @@ with Image.open(tiff_file) as img:
     
     while i < end_number: #img.n_frames:
         
-        if i == 0:
+        if do_ref:
             print("Doing ref image")
             for j in range(N_avg_images):
-                #Get average image for the first 20 images.
-                img.seek(j)  # Skift til den næste frame
+                #Get average image for the last 20 images
+                img.seek(j+(end_number-N_avg_images))  # Skift til den næste frame
                 img_frame = img.copy()  # Kopi af den aktuelle frame
 
                 # Konverter til NumPy array
@@ -63,10 +65,6 @@ with Image.open(tiff_file) as img:
 
                 #Image array cropped
                 img_array_cropped = img_array[70:945+1,220-1:685+2] #img_array[:,120:762] #Oprindelig cropping (completely cropped) img_array[70:945+1,220-1:685+2]
-                
-                plt.figure()
-                plt.imshow(img_array_cropped, cmap='gray')
-                plt.show()
 
                 #Save
                 if avg_img is None:
@@ -78,10 +76,10 @@ with Image.open(tiff_file) as img:
             avg_img /= N_avg_images
             ref_img = avg_img
             
-            #Update counter
-            i=j
+            np.save('high_pressure_ref_img.npy',ref_img)
             
-            ref_img = np.load('low_pressure_ref_img.npy') #OOOOBS, DETTE IGNORERER OVENSTÅENDE OG INDLÆSER BLOT ET ALLEREDE GEMT BILLEDE. LOW_PRESSURE_REF_IMG ER EN MIDLING AF DE FØRSTE 20 BILLEDER FRA LOW_PRESSURE-MÅLINGEN.
+            do_ref = False
+            
         else:
             print(f"Processing {i}/{end_number}")
             #Get average image for the first 20 images.
@@ -94,9 +92,9 @@ with Image.open(tiff_file) as img:
             #Image array cropped
             img_array_cropped = img_array[70:945+1,220-1:685+2] #img_array[:,120:762] #Oprindelig cropping (completely cropped) img_array[70:945+1,220-1:685+2]
 
-            diff_img = -(img_array_cropped - ref_img) #OBS. Dette kan også være img_array_cropped - ref_img uden minustegn, men så skal du sætte grænserne til vmin = -1000 og vmax = 0 nedenfor. Byt rundt på det. Det er blot for at få attenueringen til at lyse op i stedet for  at dæmpe!
+            diff_img = abs(img_array_cropped - ref_img)
             fig = plt.figure()
-            im = plt.imshow(diff_img,cmap=cmap,vmin = 0, vmax = 1000) #vmin = 5513, vmax = 15000) #1991 3799 er max max value,  772 er mean max value, 0 er mean min value.
+            im = plt.imshow(diff_img,cmap=cmap,vmin = 0, vmax = 2300) #vmin = 5513, vmax = 15000) #1991 3799 er max max value,  772 er mean max value, 0 er mean min value.
             fig.colorbar(im, orientation='vertical')
             plt.title(i)
             plt.savefig(f"{folder_path}\\{img_counter}.png")
@@ -108,7 +106,7 @@ with Image.open(tiff_file) as img:
             min_val.append(np.min(diff_img))
             max_val.append(np.max(diff_img))
             
-        i+=1
+        i+=100
         
 
 #Creating video
